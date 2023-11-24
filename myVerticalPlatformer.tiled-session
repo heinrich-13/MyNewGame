@@ -1,0 +1,27 @@
+{
+    "activeFile": "FloorCollisions.tsx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "FloorCollisions.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 2.99
+        }
+    },
+    "last.imagePath": "/Users/yenza/HeinrichPersonal/First3DGame/img",
+    "openFiles": [
+        "FloorCollisions.tsx"
+    ],
+    "project": "myVerticalPlatformer.tiled-project",
+    "property.type": "int",
+    "recentFiles": [
+        "FloorCollisions.tsx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.useTransparentColor": true
+}
