@@ -1,16 +1,22 @@
 class CollisionBlock {
-	constructor({position, height = 16}) {
+	constructor({position, height = 16, imageSrc, scale = 3}) {
 		this.position = position
     this.width = 16
     this.height = height
+		this.image = new Image()
+		this.image.src = imageSrc
+		this.scale = scale
 	}
 
 	draw() {
-    c.fillStyle = "rgba(255, 0, 0, 0.5";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
-	}
+		if (!this.image.complete) return
 
-	update() {
-		this.draw()
+		c.drawImage(
+			this.image,
+			this.position.x,
+			this.position.y,
+			this.width * this.scale / 3,
+			this.height * this.scale
+		)
 	}
 }

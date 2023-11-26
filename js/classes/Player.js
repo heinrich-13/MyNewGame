@@ -101,7 +101,7 @@ class Player extends Sprite {
   updateCameraBox() {
     this.cameraBox = {
       position: {
-        x: this.position.x - canvas.height,
+        x: this.position.x - 50,
         y: this.position.y,
       },
       width: 200,

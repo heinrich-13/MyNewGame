@@ -45,7 +45,7 @@ platformCollisions2D.forEach((row, y) => {
 						x: x * 16,
 						y: y * 16,
 					},
-					height: 4
+					height: 4,
 				})
 			)
 		}
@@ -112,9 +112,15 @@ const keys = {
 	ArrowRight: {
 		pressed: false,
 	},
+	d: {
+		pressed: false,
+	},
 	ArrowLeft: {
 		pressed: false
 	},
+	a: {
+		pressed: false
+	}
 }
 
 const background = new Sprite(
@@ -123,7 +129,9 @@ const background = new Sprite(
 		x: 0,
 		y: 0,
 	},
-	imageSrc: "./img/background.png"})
+	imageSrc: "./img/background.png"
+	}
+)
 
 backgroundImageHeight = 432
 const camera = {
@@ -135,31 +143,42 @@ const camera = {
 
 function animate() {
 	requestAnimationFrame(animate);
-	c.fillRect(0, 0, canvas.width, canvas.height);
 
 	c.save();
 	c.scale(4, 4);
 	c.translate(camera.position.x, camera.position.y)
 	background.update();
 
-	// collisionBlocks.forEach((collisionBlock) => {
-	// 	collisionBlock.update();
-	// })
-	//
-	// platformCollisionBlocks.forEach((collisionBlock) => {
-	// 	collisionBlock.update();
-	// })
-
 	player.checkForHorizontalCanvasCollision()
 	player.update();
-
 	player.velocity.x = 0;
-	if (keys.ArrowRight.pressed) {
+
+	const diamondIndices = [];
+
+	platformCollisionBlocks.forEach((block, index) => {
+		block.draw(); // Draw the platformCollisionBlock
+
+		// Check if the index is a multiple of 3 (0, 3, 6, ...)
+		if (index % 3 === 0) {
+			const reward = new Reward({
+				position: {
+					x: block.position.x,
+					y: block.position.y - 20, // Adjust the y position as needed
+				},
+				imageSrc: "./img/rewards/diamond.png",
+				scale: 0.5, // Adjust the scale as needed
+			});
+
+			reward.draw(); // Draw the diamond for every third platformCollisionBlock
+		}
+	});
+
+	if (keys.ArrowRight.pressed || keys.d.pressed) {
 		player.switchSprite("Run")
 		player.velocity.x = 1.5
 		player.lastDirection = "right"
 		player.shouldPanCameraToTheLeft({canvas, camera})
-	} else if (keys.ArrowLeft.pressed){
+	} else if (keys.ArrowLeft.pressed || keys.a.pressed) {
 		player.switchSprite("RunLeft")
 		player.velocity.x = -1.5
 		player.lastDirection = "left"
@@ -191,11 +210,20 @@ window.addEventListener("keydown", (event) => {
 		case "ArrowRight":
 			keys.ArrowRight.pressed = true;
 			break;
+		case "a":
+			keys.a.pressed = true;
+			break;
 		case "ArrowLeft":
 			keys.ArrowLeft.pressed = true;
 			break;
+		case "d":
+			keys.d.pressed = true;
+			break;
 		case "ArrowUp":
 			player.velocity.y = -4.5;
+			break;
+		case "w":
+			player.velocity.y = -8;
 			break;
 	}
 })
@@ -205,8 +233,14 @@ window.addEventListener("keyup", (event) => {
 		case "ArrowRight":
 			keys.ArrowRight.pressed = false;
 			break;
+		case "a":
+			keys.a.pressed = false;
+			break;
 		case "ArrowLeft":
 			keys.ArrowLeft.pressed = false;
+			break;
+		case "d":
+			keys.d.pressed = false;
 			break;
 	}
 })
